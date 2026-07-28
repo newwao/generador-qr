@@ -3,7 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador de Códigos QR Profesional</title>
+    <title>Generador de Códigos QR Profesional | Codigoteck</title>
+    
+    <!-- Meta tags de SEO y previsualización para Redes Sociales y WhatsApp -->
+    <meta name="description" content="Crea y descarga códigos QR personalizados en alta definición gratis. Genera códigos para sitios web, WhatsApp, Facebook, TikTok y YouTube al instante con Codigoteck.">
+    <meta name="keywords" content="generador qr, crear codigo qr, qr whatsapp, qr codigoteck, descargar qr png, qr profesional">
+    <meta name="author" content="Codigoteck">
+    
+    <!-- Open Graph / WhatsApp / Facebook / LinkedIn / Telegram -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="./">
+    <meta property="og:title" content="Generador de Códigos QR Profesional | Codigoteck">
+    <meta property="og:description" content="Crea tus códigos QR gratis en segundos. Ideal para enlaces, redes sociales y negocios. Descarga instantánea en alta calidad PNG.">
+    <meta property="og:image" content="og-image.jpg">
+    <meta property="og:image:secure_url" content="og-image.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Codigoteck">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Generador de Códigos QR Profesional | Codigoteck">
+    <meta name="twitter:description" content="Crea tus códigos QR gratis en segundos. Ideal para enlaces, redes sociales y negocios. Descarga instantánea en alta calidad PNG.">
+    <meta name="twitter:image" content="og-image.jpg">
+
     <!-- Tailwind CSS para el diseño -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Librería QRCode.js -->
@@ -19,12 +43,39 @@
             border-radius: 8px;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
         }
+        /* Custom scrollbar para el modal */
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 8px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: rgba(99, 102, 241, 0.4);
+            border-radius: 8px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb:hover {
+            background: rgba(99, 102, 241, 0.7);
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center p-4">
 
-    <div class="bg-slate-800 p-8 rounded-3xl shadow-2xl border border-slate-700 max-w-md w-full">
-        <div class="text-center mb-8">
+    <div class="bg-slate-800 p-8 rounded-3xl shadow-2xl border border-slate-700 max-w-md w-full relative">
+        
+        <!-- Encabezado con Botón de Ayuda -->
+        <div class="relative text-center mb-8">
+            <!-- Botón de Ayuda -->
+            <button id="help-btn" type="button" 
+                    title="¿Cómo funciona el sistema?" 
+                    class="absolute top-0 right-0 flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/70 hover:bg-indigo-600/30 border border-slate-600 hover:border-indigo-500/50 text-slate-300 hover:text-white rounded-full text-xs font-semibold transition-all duration-200 group shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <svg class="w-4 h-4 text-indigo-400 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>Ayuda</span>
+            </button>
+
             <div class="inline-block p-3 bg-indigo-500/10 rounded-2xl mb-4 border border-indigo-500/20">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
@@ -84,6 +135,96 @@
         </div>
     </div>
 
+    <!-- Modal de Ayuda / Tutorial -->
+    <div id="help-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+        <div id="modal-card" class="bg-slate-900 border border-slate-700/80 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl transform scale-95 transition-transform duration-300 overflow-hidden relative">
+            
+            <!-- Botón Cerrar X -->
+            <button id="close-modal-btn" type="button" aria-label="Cerrar ventana de ayuda" class="absolute top-5 right-5 text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 p-2 rounded-full transition-colors focus:outline-none">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+
+            <!-- Título Modal -->
+            <div class="flex items-center gap-3 mb-6">
+                <div class="p-3 bg-indigo-500/20 rounded-2xl border border-indigo-500/30 shrink-0">
+                    <svg class="w-6 h-6 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold text-white">¿Cómo usar el Generador QR?</h2>
+                    <p class="text-xs text-slate-400">Guía rápida de uso en 4 pasos</p>
+                </div>
+            </div>
+
+            <!-- Pasos -->
+            <div class="space-y-3.5 text-sm text-slate-300 max-h-[60vh] overflow-y-auto custom-scroll pr-1">
+                <!-- Paso 1 -->
+                <div class="flex items-start gap-3 bg-slate-800/60 p-3.5 rounded-2xl border border-slate-700/50">
+                    <div class="flex items-center justify-center w-7 h-7 rounded-xl bg-indigo-600 text-white font-bold text-xs shrink-0 mt-0.5 shadow-md shadow-indigo-900/30">
+                        1
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-white">Ingresa tu enlace o texto</h3>
+                        <p class="text-xs text-slate-400 mt-0.5">Escribe o pega cualquier dirección URL (ejemplo: <span class="text-indigo-300 font-mono">https://miweb.com</span>) o texto en el campo principal.</p>
+                    </div>
+                </div>
+
+                <!-- Paso 2 -->
+                <div class="flex items-start gap-3 bg-slate-800/60 p-3.5 rounded-2xl border border-slate-700/50">
+                    <div class="flex items-center justify-center w-7 h-7 rounded-xl bg-indigo-600 text-white font-bold text-xs shrink-0 mt-0.5 shadow-md shadow-indigo-900/30">
+                        2
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-white">Accesos rápidos (Opcional)</h3>
+                        <p class="text-xs text-slate-400 mt-0.5">Usa los botones de YouTube, TikTok o Facebook para cargar instantáneamente tus redes y generar su código QR.</p>
+                    </div>
+                </div>
+
+                <!-- Paso 3 -->
+                <div class="flex items-start gap-3 bg-slate-800/60 p-3.5 rounded-2xl border border-slate-700/50">
+                    <div class="flex items-center justify-center w-7 h-7 rounded-xl bg-indigo-600 text-white font-bold text-xs shrink-0 mt-0.5 shadow-md shadow-indigo-900/30">
+                        3
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-white">Genera el Código QR</h3>
+                        <p class="text-xs text-slate-400 mt-0.5">Haz clic en <strong>"Generar Código QR"</strong> o presiona la tecla <kbd class="px-1.5 py-0.5 bg-slate-700 rounded text-[10px] text-slate-200 border border-slate-600 font-mono">Enter</kbd> en tu teclado.</p>
+                    </div>
+                </div>
+
+                <!-- Paso 4 -->
+                <div class="flex items-start gap-3 bg-slate-800/60 p-3.5 rounded-2xl border border-slate-700/50">
+                    <div class="flex items-center justify-center w-7 h-7 rounded-xl bg-indigo-600 text-white font-bold text-xs shrink-0 mt-0.5 shadow-md shadow-indigo-900/30">
+                        4
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-white">Descarga y comparte</h3>
+                        <p class="text-xs text-slate-400 mt-0.5">Presiona <strong>"Descargar PNG"</strong> para guardar la imagen en tu dispositivo. ¡Listo para imprimir, enviar por WhatsApp o publicar!</p>
+                    </div>
+                </div>
+
+                <!-- Tips / Consejos -->
+                <div class="bg-indigo-950/40 border border-indigo-500/30 p-3.5 rounded-2xl text-xs text-indigo-200 flex items-start gap-2.5 mt-2">
+                    <svg class="w-5 h-5 text-indigo-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 01-2 2h-4a2 2 0 01-2-2v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                    </svg>
+                    <div>
+                        <strong class="font-semibold text-indigo-300">Tip para escanear:</strong> Para que los celulares abran una página automáticamente al escanear, incluye el protocolo <code class="bg-indigo-900/60 px-1 py-0.5 rounded text-indigo-200 font-mono">https://</code>.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botón Entendido -->
+            <div class="mt-5 pt-4 border-t border-slate-800">
+                <button id="got-it-btn" type="button" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3 rounded-xl transition-all shadow-lg shadow-indigo-900/20 active:scale-[0.98] text-sm">
+                    ¡Entendido, a crear mi QR!
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Enlace de Créditos y Redes Sociales -->
     <footer class="mt-8 flex flex-col items-center gap-4">
         <!-- Iconos de Redes Sociales de Codigoteck -->
@@ -127,7 +268,41 @@
         const resultContainer = document.getElementById('result-container');
         const statusMsg = document.getElementById('status-msg');
 
+        // Modal Help elements
+        const helpBtn = document.getElementById('help-btn');
+        const helpModal = document.getElementById('help-modal');
+        const modalCard = document.getElementById('modal-card');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const gotItBtn = document.getElementById('got-it-btn');
+
         let qrInstance = null;
+
+        // Funciones del Modal de Ayuda
+        function openHelpModal() {
+            helpModal.classList.remove('opacity-0', 'pointer-events-none');
+            modalCard.classList.remove('scale-95');
+            modalCard.classList.add('scale-100');
+        }
+
+        function closeHelpModal() {
+            helpModal.classList.add('opacity-0', 'pointer-events-none');
+            modalCard.classList.remove('scale-100');
+            modalCard.classList.add('scale-95');
+        }
+
+        helpBtn.addEventListener('click', openHelpModal);
+        closeModalBtn.addEventListener('click', closeHelpModal);
+        gotItBtn.addEventListener('click', closeHelpModal);
+
+        helpModal.addEventListener('click', (e) => {
+            if (e.target === helpModal) closeHelpModal();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !helpModal.classList.contains('pointer-events-none')) {
+                closeHelpModal();
+            }
+        });
 
         // Función para establecer URL rápida y generar QR
         function setQuickUrl(url) {
