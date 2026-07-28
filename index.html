@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Códigos QR Profesional</title>
+    <!-- Tailwind CSS para el diseño -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Librería QRCode.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a; /* Slate-900: Fondo oscuro profundo */
+        }
+        #qrcode img {
+            margin: 0 auto;
+            border-radius: 8px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
+
+    <div class="bg-slate-800 p-8 rounded-3xl shadow-2xl border border-slate-700 max-w-md w-full">
+        <div class="text-center mb-8">
+            <div class="inline-block p-3 bg-indigo-500/10 rounded-2xl mb-4 border border-indigo-500/20">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+                </svg>
+            </div>
+            <h1 class="text-3xl font-extrabold text-white">Generador QR</h1>
+            <p class="text-slate-400 mt-2">Crea tus códigos de forma rápida y segura</p>
+        </div>
+
+        <!-- Formulario de Entrada -->
+        <div class="space-y-6">
+            <div>
+                <label for="url-input" class="block text-sm font-semibold text-slate-300 mb-2">Enlace o Texto</label>
+                <input type="text" id="url-input" placeholder="https://tu-sitio-web.com" 
+                    class="w-full px-4 py-4 bg-slate-900 border border-slate-700 rounded-xl focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all text-white placeholder-slate-500">
+            </div>
+
+            <button id="generate-btn" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-indigo-900/20 active:scale-[0.98]">
+                Generar Código QR
+            </button>
+        </div>
+
+        <!-- Área de Resultado -->
+        <div id="result-container" class="mt-10 hidden flex flex-col items-center animate-in fade-in zoom-in duration-300">
+            <div class="bg-white p-6 rounded-2xl">
+                <!-- El QR se mantiene negro/blanco para máxima compatibilidad -->
+                <div id="qrcode"></div>
+            </div>
+            
+            <p id="status-msg" class="text-sm font-medium mt-4 text-center"></p>
+
+            <button id="download-btn" class="mt-6 flex items-center justify-center gap-2 w-full bg-white hover:bg-slate-100 text-slate-900 font-bold py-3 px-4 rounded-xl transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                Descargar PNG
+            </button>
+        </div>
+    </div>
+
+    <!-- Enlace de Créditos -->
+    <footer class="mt-8">
+        <p class="text-slate-500 text-sm">
+            Desarrollado por <a href="https://codigoteck.com" target="_blank" class="text-indigo-400 hover:text-indigo-300 font-medium transition-colors">Codigoteck.com</a>
+        </p>
+    </footer>
+
+    <script>
+        const urlInput = document.getElementById('url-input');
+        const generateBtn = document.getElementById('generate-btn');
+        const downloadBtn = document.getElementById('download-btn');
+        const qrcodeContainer = document.getElementById('qrcode');
+        const resultContainer = document.getElementById('result-container');
+        const statusMsg = document.getElementById('status-msg');
+
+        let qrInstance = null;
+
+        // Función para generar el QR
+        function generateQR() {
+            const url = urlInput.value.trim();
+
+            if (!url) {
+                statusMsg.textContent = "⚠️ Por favor, ingresa un enlace válido.";
+                statusMsg.className = "text-sm text-red-400 mt-4 text-center";
+                return;
+            }
+
+            // Limpiar contenedor previo
+            qrcodeContainer.innerHTML = '';
+            resultContainer.classList.remove('hidden');
+            statusMsg.textContent = "";
+
+            // Crear instancia de QR
+            qrInstance = new QRCode(qrcodeContainer, {
+                text: url,
+                width: 200,
+                height: 200,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+            statusMsg.textContent = "¡Código listo para usar!";
+            statusMsg.className = "text-sm text-indigo-400 mt-4 text-center font-semibold";
+        }
+
+        // Función para descargar la imagen
+        function downloadQR() {
+            const img = qrcodeContainer.querySelector('img');
+            const canvas = qrcodeContainer.querySelector('canvas');
+
+            const link = document.createElement('a');
+            link.download = 'codigo-qr-codigoteck.png';
+            
+            if (img && img.src) {
+                link.href = img.src;
+                link.click();
+            } else if (canvas) {
+                link.href = canvas.toDataURL("image/png");
+                link.click();
+            }
+        }
+
+        // Eventos
+        generateBtn.addEventListener('click', generateQR);
+        downloadBtn.addEventListener('click', downloadQR);
+
+        // Permitir generar al presionar Enter
+        urlInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') generateQR();
+        });
+    </script>
+</body>
+</html>
